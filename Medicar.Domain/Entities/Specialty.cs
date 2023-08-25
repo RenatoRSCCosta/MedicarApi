@@ -2,7 +2,8 @@
 
 public class Specialty
 {
-    public int Id { get; set; }
+    public int SpecialtyId { get; set; }
     public string Name { get; set; }
+    public virtual Doctor Doctor { get; set; }
 }
 

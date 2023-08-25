@@ -8,8 +8,9 @@ namespace Medicar_API.Domain.Entities;
 
 public class Slot
 {
-    public int Id { get; set; }
+    public int SlotId { get; set; }
     public TimeOnly Hour { get; set; }
     public bool Available { get; set; }
-    public Schedule Schedule { get; set; }
+    public int ScheduleId { get; set; }
+    public virtual Schedule Schedule { get; set; }
 }

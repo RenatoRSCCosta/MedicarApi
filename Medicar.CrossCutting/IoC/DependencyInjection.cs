@@ -1,4 +1,4 @@
-﻿using Medicar.Infrastructure.Contex;
+﻿using Medicar.Infrastructure.Contexs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

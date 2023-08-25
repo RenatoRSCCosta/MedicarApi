@@ -2,9 +2,10 @@
 
 public class Doctor
 {
-    public int Id { get; set; }
+    public int DoctorId { get; set; }
     public string Name { get; set; }
     public string Crm { get; set; }
     public string Email { get; set; }
-    public Specialty Specialty { get; set; }
+    public int SpecialtyId { get; set; }
+    public virtual Specialty Specialty { get; set; }
 }
