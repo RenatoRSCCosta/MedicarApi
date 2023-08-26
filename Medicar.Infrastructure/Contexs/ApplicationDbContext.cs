@@ -1,4 +1,5 @@
-﻿using Medicar_API.Domain.Entities;
+﻿using Medicar.Infrastructure.EntityConfigurations;
+using Medicar_API.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -9,6 +10,14 @@ namespace Medicar.Infrastructure.Contexs
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> opts) : base(opts)
         {
             
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.ApplyConfiguration(new DoctorConfiguration());
+            modelBuilder.ApplyConfiguration(new SpecialtyConfiguration());
         }
 
         public DbSet<Consultation> Consultations { get; set; }
