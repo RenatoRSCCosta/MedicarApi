@@ -1,4 +1,5 @@
 ﻿using Medicar.Application.Dtos;
+using Medicar_API.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

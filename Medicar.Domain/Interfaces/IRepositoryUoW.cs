@@ -4,14 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Medicar.Domain.Interfaces
-{
-    public interface IRepositoryUoW : IDisposable
-    {
-        IDoctorRepository Doctors { get; }
-        ISpecialtyRepository Specialtys { get; } 
+namespace Medicar.Domain.Interfaces;
 
-        void Commit();
-        void Rowback();
-    }
+public interface IRepositoryUoW
+{
+    IDoctorRepository Doctors { get; }
+    ISpecialtyRepository Specialtys { get; } 
+
+    void Commit();
+    void Rowback();
 }

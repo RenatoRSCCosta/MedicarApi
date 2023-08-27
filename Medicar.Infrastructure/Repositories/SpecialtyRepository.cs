@@ -16,7 +16,7 @@ public class SpecialtyRepository : ISpecialtyRepository
     {
         _dbContext.Specialtys.Add(specialty);
         await _dbContext.SaveChangesAsync();
-        return specialty;
+        return await GetSpecialtyById(specialty.SpecialtyId);
     }
 
     public async Task DeleteSpecialty(Specialty specialty)
@@ -25,7 +25,7 @@ public class SpecialtyRepository : ISpecialtyRepository
         await _dbContext.SaveChangesAsync();
     }
 
-    public Task<List<Specialty>> GetAllSpecialty()
+    public Task<List<Specialty>> GetAllSpecialtys()
     {
         return _dbContext.Specialtys.ToListAsync();
     }

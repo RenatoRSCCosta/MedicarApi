@@ -9,7 +9,6 @@ namespace Medicar.Application.Dtos;
 
 public class SpecialtyDto
 {
-    [Required]
     public int SpecialtyId { get; set; }
     [Required]
     public string Name { get; set; }
