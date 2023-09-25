@@ -6,11 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Medicar.Application.Dtos;
+namespace Medicar.Application.Dtos.PostDtos;
 
-public class DoctorDto
+public class PostDoctorDto
 {
-    public int DoctorId { get; set; }
     [Required]
     public string Name { get; set; }
     [Required]
@@ -18,6 +17,4 @@ public class DoctorDto
     public string Email { get; set; }
     [Required]
     public int SpecialtyId { get; set; }
-    public GetSpecialtyDto Specialty { get; set; }
-
 }

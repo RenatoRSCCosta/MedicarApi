@@ -30,6 +30,7 @@ public static class DependencyInjection
 
         services.AddScoped<IRepositoryUoW, RepositoryUoW>();
         services.AddScoped<ISpecialtyService, SpecialtyService>();
+        services.AddScoped<IDoctorService, DoctorService>();
 
         #endregion
 
