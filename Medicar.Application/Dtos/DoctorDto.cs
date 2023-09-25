@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Medicar.Application.Dtos.GetDtos;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -17,6 +18,6 @@ public class DoctorDto
     public string Email { get; set; }
     [Required]
     public int SpecialtyId { get; set; }
-    public SpecialtyDto Specialty { get; set; }
+    public GetSpecialtyDto Specialty { get; set; }
 
 }

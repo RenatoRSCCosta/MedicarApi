@@ -1,4 +1,6 @@
 ﻿using Medicar.Application.Dtos;
+using Medicar.Application.Dtos.GetDtos;
+using Medicar.Application.Dtos.PostDtos;
 using Medicar.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,14 +18,14 @@ public class SpecialtyController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<List<SpecialtyDto>>> GetAll()
+    public async Task<ActionResult<List<GetSpecialtyDto>>> GetAll()
     {
         var specialtys = await _specialtyService.GetAllSpecialtys();
         return Ok(specialtys);
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<List<SpecialtyDto>>> GetById(int id)
+    public async Task<ActionResult<List<GetSpecialtyDto>>> GetById(int id)
     {
         var specialty = await _specialtyService.GetSpecialtyById(id);
         if (specialty is not null)
@@ -35,7 +37,7 @@ public class SpecialtyController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<SpecialtyDto>> Add(SpecialtyDto specialtyDto)
+    public async Task<ActionResult<PostSpecialtyDto>> Add(PostSpecialtyDto specialtyDto)
     {
         var specialty = await _specialtyService.CreateSpecialty(specialtyDto);
         if (specialty is not null)
@@ -46,9 +48,9 @@ public class SpecialtyController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult<SpecialtyDto>> Update(int id, SpecialtyDto specialtyDto)
+    public async Task<ActionResult<PutSpecialtyDto>> Update(int id, PutSpecialtyDto specialtyDto)
     {
-        var specialty = _specialtyService.UpdateSpecialty(specialtyDto);
+        var specialty = await _specialtyService.UpdateSpecialty(specialtyDto);
         if (specialty is not null)
         {
             return Ok(specialty);

@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Medicar.Application.Dtos;
+using Medicar.Application.Dtos.GetDtos;
+using Medicar.Application.Dtos.PostDtos;
 using Medicar.Application.Interfaces;
 using Medicar.Domain.Interfaces;
 using Medicar_API.Domain.Entities;
@@ -23,30 +25,30 @@ public class SpecialtyService : ISpecialtyService
 
     }
 
-    public async Task<List<SpecialtyDto>> GetAllSpecialtys()
+    public async Task<List<GetSpecialtyDto>> GetAllSpecialtys()
     {
         var specialtys = await _repositoryUoW.Specialtys.GetAllSpecialtys();
-        return _mapper.Map<List<SpecialtyDto>>(specialtys);
+        return _mapper.Map<List<GetSpecialtyDto>>(specialtys);
     }
 
-    public async Task<SpecialtyDto> GetSpecialtyById(int id)
+    public async Task<GetSpecialtyDto> GetSpecialtyById(int id)
     {
         var specialty = await _repositoryUoW.Specialtys.GetSpecialtyById(id);
-        return _mapper.Map<SpecialtyDto>(specialty);
+        return _mapper.Map<GetSpecialtyDto>(specialty);
     }
 
-    public async Task<SpecialtyDto> CreateSpecialty(SpecialtyDto specialtyDto)
+    public async Task<PostSpecialtyDto> CreateSpecialty(PostSpecialtyDto specialtyDto)
     {
         var specialty = _mapper.Map<Specialty>(specialtyDto);
         var result = await _repositoryUoW.Specialtys.CreateSpecialty(specialty);
-        return _mapper.Map<SpecialtyDto>(result);
+        return _mapper.Map<PostSpecialtyDto>(result);
     }
 
-    public async Task<SpecialtyDto> UpdateSpecialty(SpecialtyDto specialtyDto)
+    public async Task<PutSpecialtyDto> UpdateSpecialty(PutSpecialtyDto specialtyDto)
     {
         var specialty = _mapper.Map<Specialty>(specialtyDto);
         var result = await _repositoryUoW.Specialtys.UpdateSpecialty(specialty);
-        return _mapper.Map<SpecialtyDto>(result);
+        return _mapper.Map<PutSpecialtyDto>(result);
     }
 
     public async Task DeleteSpecialtyById(int id)

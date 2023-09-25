@@ -1,4 +1,6 @@
 ﻿using Medicar.Application.Dtos;
+using Medicar.Application.Dtos.GetDtos;
+using Medicar.Application.Dtos.PostDtos;
 using Medicar_API.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,9 +12,9 @@ namespace Medicar.Application.Interfaces;
 
 public interface ISpecialtyService
 {
-    Task<List<SpecialtyDto>> GetAllSpecialtys();
-    Task<SpecialtyDto> GetSpecialtyById(int id);
-    Task<SpecialtyDto> CreateSpecialty(SpecialtyDto specialty);
-    Task<SpecialtyDto> UpdateSpecialty(SpecialtyDto specialty);
+    Task<List<GetSpecialtyDto>> GetAllSpecialtys();
+    Task<GetSpecialtyDto> GetSpecialtyById(int id);
+    Task<PostSpecialtyDto> CreateSpecialty(PostSpecialtyDto specialty);
+    Task<PutSpecialtyDto> UpdateSpecialty(PutSpecialtyDto specialty);
     Task DeleteSpecialtyById(int id);
 }
