@@ -8,23 +8,27 @@ public class DoctorConfiguration : IEntityTypeConfiguration<Doctor>
 {
     public void Configure(EntityTypeBuilder<Doctor> builder)
     {
-        builder.HasKey(p => p.DoctorId);
+        builder.HasKey(d => d.DoctorId);
 
-        builder.Property(p => p.Name)
+        builder.Property(d => d.Name)
             .HasColumnType("varchar")
             .HasMaxLength(250)
             .IsRequired();
 
-        builder.Property(p => p.Crm)
+        builder.Property(d => d.Crm)
             .HasColumnType("varchar")
             .HasMaxLength(50)
             .IsRequired();
 
-        builder.HasIndex(c => c.Crm)
+        builder.HasIndex(d => d.Crm)
             .IsUnique();
 
-        builder.Property(p => p.Email)
+        builder.Property(d => d.Email)
             .HasColumnType("varchar")
             .HasMaxLength(50);
+
+        builder.HasMany(d => d.Schedules)
+            .WithOne(s => s.Doctor)
+            .HasForeignKey(s => s.DoctorId);
     }
 }

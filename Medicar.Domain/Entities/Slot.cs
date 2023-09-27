@@ -12,5 +12,6 @@ public class Slot
     public TimeOnly Hour { get; set; }
     public bool Available { get; set; }
     public int ScheduleId { get; set; }
-    public virtual Schedule Schedule { get; set; }
+    public Schedule Schedule { get; set; }
+    public ICollection<Consultation> Consultations { get; set; }
 }

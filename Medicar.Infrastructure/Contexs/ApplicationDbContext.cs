@@ -16,7 +16,10 @@ namespace Medicar.Infrastructure.Contexs
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.ApplyConfiguration(new ConsultationConfiguration());
             modelBuilder.ApplyConfiguration(new DoctorConfiguration());
+            modelBuilder.ApplyConfiguration(new ScheduleConfiguration());
+            modelBuilder.ApplyConfiguration(new SlotConfiguration());
             modelBuilder.ApplyConfiguration(new SpecialtyConfiguration());
         }
 
