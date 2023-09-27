@@ -15,24 +15,26 @@ namespace Medicar.Application.Services;
 
 public class DoctorService : IDoctorService
 {
-    private IRepositoryUoW _repositoryUoW;
+    private IDoctorRepository _doctorRepository;
+    private ISpecialtyRepository _specialtyRepository;
     private IMapper _mapper;
 
-    public DoctorService(IRepositoryUoW repositoryUoW, IMapper mapper)
+    public DoctorService(IDoctorRepository doctorRepository, ISpecialtyRepository specialtyRepository, IMapper mapper)
     {
-        _repositoryUoW = repositoryUoW;
+        _doctorRepository = doctorRepository;
+        _specialtyRepository = specialtyRepository;
         _mapper = mapper;
 
     }
 
     public async Task<List<GetDoctorDto>> GetAllDoctors()
     {
-        var doctors = await _repositoryUoW.Doctors.GetAllDoctors();
+        var doctors = await _doctorRepository.GetAllDoctors();
         if (doctors.Any())
         {
             foreach (var doctor in doctors)
             {
-                doctor.Specialty = await _repositoryUoW.Specialtys.GetSpecialtyById(doctor.SpecialtyId);
+                doctor.Specialty = await _specialtyRepository.GetSpecialtyById(doctor.SpecialtyId);
             }
         }
         return _mapper.Map<List<GetDoctorDto>>(doctors);
@@ -40,10 +42,10 @@ public class DoctorService : IDoctorService
 
     public async Task<GetDoctorDto> GetDoctorById(int id)
     {
-        var doctor = await _repositoryUoW.Doctors.GetDoctorById(id);
+        var doctor = await _doctorRepository.GetDoctorById(id);
         if(doctor is not null)
         {
-            doctor.Specialty = await _repositoryUoW.Specialtys.GetSpecialtyById(doctor.SpecialtyId);
+            doctor.Specialty = await _specialtyRepository.GetSpecialtyById(doctor.SpecialtyId);
         }
         return _mapper.Map<GetDoctorDto>(doctor);
     }
@@ -51,20 +53,20 @@ public class DoctorService : IDoctorService
     public async Task<PostDoctorDto> CreateDoctor(PostDoctorDto doctorDto)
     {
         var doctor = _mapper.Map<Doctor>(doctorDto);
-        var result = await _repositoryUoW.Doctors.CreateDoctor(doctor);
+        var result = await _doctorRepository.CreateDoctor(doctor);
         return _mapper.Map<PostDoctorDto>(result);
     }
 
     public async Task<PutDoctorDto> UpdateDoctor(PutDoctorDto doctorDto)
     {
-        var doctor = _mapper.Map<Specialty>(doctorDto);
-        var result = await _repositoryUoW.Specialtys.UpdateSpecialty(doctor);
+        var doctor = _mapper.Map<Doctor>(doctorDto);
+        var result = await _doctorRepository.UpdateDoctor(doctor);
         return _mapper.Map<PutDoctorDto>(result);
     }
 
     public async Task DeleteDoctor(int id)
     {
-        var doctor = await _repositoryUoW.Doctors.GetDoctorById(id);
-        await _repositoryUoW.Doctors.DeleteDoctor(doctor);
+        var doctor = await _doctorRepository.GetDoctorById(id);
+        await _doctorRepository.DeleteDoctor(doctor);
     }
 }

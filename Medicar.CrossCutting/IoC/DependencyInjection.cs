@@ -28,9 +28,15 @@ public static class DependencyInjection
 
         #region Services
 
-        services.AddScoped<IRepositoryUoW, RepositoryUoW>();
         services.AddScoped<ISpecialtyService, SpecialtyService>();
         services.AddScoped<IDoctorService, DoctorService>();
+
+        #endregion
+
+        #region Repositories
+
+        services.AddScoped<ISpecialtyRepository, SpecialtyRepository>();
+        services.AddScoped<IDoctorRepository, DoctorRepository>();
 
         #endregion
 

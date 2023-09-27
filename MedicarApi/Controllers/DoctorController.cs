@@ -33,7 +33,6 @@ public class DoctorController : ControllerBase
             return Ok(doctor);
         }
         return NotFound();
-
     }
 
     [HttpPost]

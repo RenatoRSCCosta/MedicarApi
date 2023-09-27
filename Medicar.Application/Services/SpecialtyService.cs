@@ -15,45 +15,45 @@ namespace Medicar.Application.Services;
 
 public class SpecialtyService : ISpecialtyService
 {
-    private IRepositoryUoW _repositoryUoW;
+    private ISpecialtyRepository _specialtyRepository;
     private IMapper _mapper;
 
-    public SpecialtyService(IRepositoryUoW repositoryUoW, IMapper mapper)
+    public SpecialtyService(ISpecialtyRepository specialtyRepository, IMapper mapper)
     {
-        _repositoryUoW = repositoryUoW;
+        _specialtyRepository = specialtyRepository;
         _mapper = mapper;
 
     }
 
     public async Task<List<GetSpecialtyDto>> GetAllSpecialtys()
     {
-        var specialtys = await _repositoryUoW.Specialtys.GetAllSpecialtys();
+        var specialtys = await _specialtyRepository.GetAllSpecialtys();
         return _mapper.Map<List<GetSpecialtyDto>>(specialtys);
     }
 
     public async Task<GetSpecialtyDto> GetSpecialtyById(int id)
     {
-        var specialty = await _repositoryUoW.Specialtys.GetSpecialtyById(id);
+        var specialty = await _specialtyRepository.GetSpecialtyById(id);
         return _mapper.Map<GetSpecialtyDto>(specialty);
     }
 
     public async Task<PostSpecialtyDto> CreateSpecialty(PostSpecialtyDto specialtyDto)
     {
         var specialty = _mapper.Map<Specialty>(specialtyDto);
-        var result = await _repositoryUoW.Specialtys.CreateSpecialty(specialty);
+        var result = await _specialtyRepository.CreateSpecialty(specialty);
         return _mapper.Map<PostSpecialtyDto>(result);
     }
 
     public async Task<PutSpecialtyDto> UpdateSpecialty(PutSpecialtyDto specialtyDto)
     {
         var specialty = _mapper.Map<Specialty>(specialtyDto);
-        var result = await _repositoryUoW.Specialtys.UpdateSpecialty(specialty);
+        var result = await _specialtyRepository.UpdateSpecialty(specialty);
         return _mapper.Map<PutSpecialtyDto>(result);
     }
 
     public async Task DeleteSpecialtyById(int id)
     {
-        var specialty = await _repositoryUoW.Specialtys.GetSpecialtyById(id);
-        await _repositoryUoW.Specialtys.DeleteSpecialty(specialty);
+        var specialty = await _specialtyRepository.GetSpecialtyById(id);
+        await _specialtyRepository.DeleteSpecialty(specialty);
     }
 }
