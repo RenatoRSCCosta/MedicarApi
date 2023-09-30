@@ -4,6 +4,7 @@ using Medicar.Application.Dtos.GetDtos;
 using Medicar.Application.Dtos.PostDtos;
 using Medicar.Application.Interfaces;
 using Medicar.Domain.Interfaces;
+using Medicar.Domain.Return;
 using Medicar_API.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Medicar.Application.Services;
 
-public class DoctorService : IDoctorService
+public class DoctorService : BaseService, IDoctorService
 {
     private IDoctorRepository _doctorRepository;
     private ISpecialtyRepository _specialtyRepository;
@@ -27,46 +28,138 @@ public class DoctorService : IDoctorService
 
     }
 
-    public async Task<List<GetDoctorDto>> GetAllDoctors()
+    public async Task<CustomReturn<GetDoctorDto>> GetAllDoctors()
     {
-        var doctors = await _doctorRepository.GetAllDoctors();
-        if (doctors.Any())
+        var result = new CustomReturn<GetDoctorDto>();
+
+        string error = "Erro ao buscar medicos. Verificar notificações para mais informações.";
+        string success = "Medicos encontrados com sucesso!";
+        string noDataFound = "Dados não encontrados na base!";
+
+        try
         {
-            foreach (var doctor in doctors)
+            var doctors = await _doctorRepository.GetAllDoctors();
+
+            if (doctors.Any())
+            {
+                foreach (var doctor in doctors)
+                {
+                    doctor.Specialty = await _specialtyRepository.GetSpecialtyById(doctor.SpecialtyId);
+                }
+            }
+
+            result.SetData(_mapper.Map<List<GetDoctorDto>>(doctors));
+        }
+        catch(Exception ex)
+        {
+            result = ManageException(result, ex);
+        }
+
+        return SetFeedbackMessage(result, error, noDataFound, success);
+    }
+
+    public async Task<CustomReturn<GetDoctorDto>> GetDoctorById(int id)
+    {
+        var result = new CustomReturn<GetDoctorDto>();
+
+        string error = "Erro ao buscar medico. Verificar notificações para mais informações.";
+        string success = "Medico encontrado com sucesso!";
+        string noDataFound = "Dados não encontrados na base!";
+
+        try
+        {
+            var doctor = await _doctorRepository.GetDoctorById(id);
+
+            if (doctor is not null)
             {
                 doctor.Specialty = await _specialtyRepository.GetSpecialtyById(doctor.SpecialtyId);
             }
-        }
-        return _mapper.Map<List<GetDoctorDto>>(doctors);
-    }
 
-    public async Task<GetDoctorDto> GetDoctorById(int id)
-    {
-        var doctor = await _doctorRepository.GetDoctorById(id);
-        if(doctor is not null)
+            result.SetData(_mapper.Map<GetDoctorDto>(doctor));
+        }
+        catch (Exception ex)
         {
-            doctor.Specialty = await _specialtyRepository.GetSpecialtyById(doctor.SpecialtyId);
+            result = ManageException(result, ex);
         }
-        return _mapper.Map<GetDoctorDto>(doctor);
+
+        return SetFeedbackMessage(result, error, success, noDataFound);
     }
 
-    public async Task<PostDoctorDto> CreateDoctor(PostDoctorDto doctorDto)
+    public async Task<CustomReturn<PostDoctorDto>> CreateDoctor(PostDoctorDto doctorDto)
     {
-        var doctor = _mapper.Map<Doctor>(doctorDto);
-        var result = await _doctorRepository.CreateDoctor(doctor);
-        return _mapper.Map<PostDoctorDto>(result);
+        var result = new CustomReturn<PostDoctorDto>();
+
+        string error = "Erro ao cadastrar medico. Verificar notificações para mais informações.";
+        string success = "Medico cadastrado com sucesso!";
+        string noDataFound = "Dados não encontrados na base!";
+
+        try
+        {
+            var doctor = _mapper.Map<Doctor>(doctorDto);
+
+            var response = await _doctorRepository.CreateDoctor(doctor);
+
+            result.SetData(_mapper.Map<PostDoctorDto>(response));
+        }
+        catch (Exception ex)
+        {
+            result = ManageException(result, ex);
+        }
+
+        return SetFeedbackMessage(result, error, noDataFound, success);
     }
 
-    public async Task<PutDoctorDto> UpdateDoctor(PutDoctorDto doctorDto)
+    public async Task<CustomReturn<PutDoctorDto>> UpdateDoctor(PutDoctorDto doctorDto)
     {
-        var doctor = _mapper.Map<Doctor>(doctorDto);
-        var result = await _doctorRepository.UpdateDoctor(doctor);
-        return _mapper.Map<PutDoctorDto>(result);
+        var result = new CustomReturn<PutDoctorDto>();
+
+        string error = "Erro ao atualizar medico. Verificar notificações para mais informações.";
+        string success = "Medico atualizado com sucesso!";
+        string noDataFound = "Dados não encontrados na base!";
+
+        try
+        {
+            var doctor = _mapper.Map<Doctor>(doctorDto);
+
+            if (doctor is not null) 
+            {
+                var response = await _doctorRepository.UpdateDoctor(doctor);
+
+                result.SetData(_mapper.Map<PutDoctorDto>(response));
+            }   
+        }
+        catch (Exception ex)
+        {
+            result = ManageException(result, ex);
+        }
+
+        return SetFeedbackMessage(result, error, noDataFound, success);
     }
 
-    public async Task DeleteDoctor(int id)
+    public async Task<CustomReturn<GetDoctorDto>> DeleteDoctor(int id)
     {
-        var doctor = await _doctorRepository.GetDoctorById(id);
-        await _doctorRepository.DeleteDoctor(doctor);
+        var result = new CustomReturn<GetDoctorDto>();
+
+        string error = "Erro ao remover medico. Verificar notificações para mais informações.";
+        string success = "Medico removido com sucesso!";
+        string noDataFound = "Dados não encontrados na base!";
+
+        try
+        {
+            var doctor = await _doctorRepository.GetDoctorById(id);
+
+            if (doctor is not null)
+            {
+                await _doctorRepository.DeleteDoctor(doctor);
+
+                result.SetData(_mapper.Map<GetDoctorDto>(doctor));
+            }
+        }
+        catch (Exception ex)
+        {
+            result = ManageException(result, ex);
+        }
+
+        return SetFeedbackMessage(result, error, noDataFound, success);
     }
 }

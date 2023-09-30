@@ -6,41 +6,41 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Medicar.Infrastructure.Repositories;
 
-public class DoctorRepository : IDoctorRepository
+public class ScheduleRepository : IScheduleRepository
 {
     private readonly ApplicationDbContext _dbContext;
-    public DoctorRepository(ApplicationDbContext context)
+    public ScheduleRepository(ApplicationDbContext context)
     {
         _dbContext = context;
     }
 
-    public async Task<Doctor> CreateDoctor(Doctor doctor)
+    public async Task<Schedule> CreateSchedule (Schedule schedule)
     {
-        _dbContext.Doctors.Add(doctor);
+        _dbContext.Schedules.Add(schedule);
         await _dbContext.SaveChangesAsync();
-        return doctor;
+        return schedule;
     }
 
-    public async Task DeleteDoctor(Doctor doctor)
+    public async Task DeleteSchedule(Schedule schedule)
     {
-        _dbContext.Doctors.Remove(doctor);
+        _dbContext.Schedules.Remove(schedule);
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task<List<Doctor>> GetAllDoctors()
+    public async Task<List<Schedule>> GetAllSchedules()
     {
-        return await _dbContext.Doctors.ToListAsync();
+        return await _dbContext.Schedules.ToListAsync();
     }
 
-    public async Task<Doctor> GetDoctorById(int id)
+    public async Task<Schedule> GetScheduleById(int id)
     {
-        return await _dbContext.Doctors.FindAsync(id);
+        return await _dbContext.Schedules.FindAsync(id);
     }
 
-    public async Task<Doctor> UpdateDoctor(Doctor doctor)
+    public async Task<Schedule> UpdateSchedule(Schedule schedule)
     {
-        _dbContext.Doctors.Update(doctor);
+        _dbContext.Schedules.Update(schedule);
         await _dbContext.SaveChangesAsync();
-        return await GetDoctorById(doctor.DoctorId);
+        return await GetScheduleById(schedule.ScheduleId);
     }
 }

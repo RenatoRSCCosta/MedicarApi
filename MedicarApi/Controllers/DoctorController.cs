@@ -18,42 +18,62 @@ public class DoctorController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<List<GetDoctorDto>>> GetAll()
+    public async Task<ActionResult> GetAll()
     {
         var doctors = await _doctorService.GetAllDoctors();
+
         return Ok(doctors);
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<List<GetDoctorDto>>> GetById(int id)
+    public async Task<ActionResult> GetById(int id)
     {
         var doctor = await _doctorService.GetDoctorById(id);
+
         if (doctor is not null)
         {
             return Ok(doctor);
         }
+
         return NotFound();
     }
 
     [HttpPost]
-    public async Task<ActionResult<PostDoctorDto>> Add(PostDoctorDto doctorDto)
+    public async Task<ActionResult> Add(PostDoctorDto doctorDto)
     {
         var doctor = await _doctorService.CreateDoctor(doctorDto);
+
         if (doctor is not null)
         {
             return Ok(doctor);
         }
+
         return BadRequest();
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult<PutDoctorDto>> Update(int id, PutDoctorDto doctorDto)
+    public async Task<ActionResult> Update(int id, PutDoctorDto doctorDto)
     {
         var doctor = await _doctorService.UpdateDoctor(doctorDto);
+
         if (doctor is not null)
         {
             return Ok(doctor);
         }
+
+        return BadRequest();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult> Delete(int id)
+    {
+        var doctor = await _doctorService.DeleteDoctor(id);
+
+        if (doctor is not null)
+        {
+            return Ok(doctor);
+        }
+
         return BadRequest();
     }
 

@@ -1,5 +1,6 @@
 ﻿using Medicar.Application.Dtos.GetDtos;
 using Medicar.Application.Dtos.PostDtos;
+using Medicar.Domain.Return;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,10 @@ namespace Medicar.Application.Interfaces;
 
 public interface IDoctorService
 {
-    Task<List<GetDoctorDto>> GetAllDoctors();
-    Task<GetDoctorDto> GetDoctorById(int id);
-    Task<PostDoctorDto> CreateDoctor(PostDoctorDto doctor);
-    Task<PutDoctorDto> UpdateDoctor(PutDoctorDto doctor);
-    Task DeleteDoctor(int id);
+    Task<CustomReturn<GetDoctorDto>> GetAllDoctors();
+    Task<CustomReturn<GetDoctorDto>> GetDoctorById(int id);
+    Task<CustomReturn<PostDoctorDto>> CreateDoctor(PostDoctorDto doctor);
+    Task<CustomReturn<PutDoctorDto>> UpdateDoctor(PutDoctorDto doctor);
+    Task<CustomReturn<GetDoctorDto>> DeleteDoctor(int id);
 
 }

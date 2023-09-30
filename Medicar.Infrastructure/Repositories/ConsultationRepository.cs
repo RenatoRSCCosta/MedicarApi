@@ -18,7 +18,7 @@ public class ConsultationRepository : IConsultationRepository
     {
         _dbContext.Consultations.Add(consultation);
         await _dbContext.SaveChangesAsync();
-        return slot;
+        return consultation;
     }
 
     public async Task DeleteConsultation(Consultation consultation)
