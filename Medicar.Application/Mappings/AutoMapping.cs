@@ -20,5 +20,11 @@ public class AutoMapping : Profile
         CreateMap<Specialty, PutSpecialtyDto>().ReverseMap();
         CreateMap<Specialty, GetSpecialtyDto>().ReverseMap();
         #endregion
+
+        #region Schedule Map
+        CreateMap<Schedule, PostScheduleDto>().ReverseMap();
+        //CreateMap<Specialty, PutSpecialtyDto>().ReverseMap();
+        //CreateMap<Specialty, GetSpecialtyDto>().ReverseMap();
+        #endregion
     }
 }

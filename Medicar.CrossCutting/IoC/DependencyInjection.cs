@@ -28,15 +28,19 @@ public static class DependencyInjection
 
         #region Services
 
-        services.AddScoped<ISpecialtyService, SpecialtyService>();
         services.AddScoped<IDoctorService, DoctorService>();
+        services.AddScoped<IScheduleService, ScheduleService>();
+        services.AddScoped<ISpecialtyService, SpecialtyService>();
 
         #endregion
 
         #region Repositories
 
-        services.AddScoped<ISpecialtyRepository, SpecialtyRepository>();
+        services.AddScoped<IConsultationRepository, ConsultationRepository>();
         services.AddScoped<IDoctorRepository, DoctorRepository>();
+        services.AddScoped<IScheduleRepository, ScheduleRepository>();
+        services.AddScoped<ISlotRepository, SlotRepository>();
+        services.AddScoped<ISpecialtyRepository, SpecialtyRepository>();
 
         #endregion
 

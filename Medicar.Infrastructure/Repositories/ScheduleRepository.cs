@@ -2,7 +2,7 @@
 using Medicar.Infrastructure.Contexs;
 using Medicar_API.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-
+using System.Linq;
 
 namespace Medicar.Infrastructure.Repositories;
 
@@ -42,5 +42,10 @@ public class ScheduleRepository : IScheduleRepository
         _dbContext.Schedules.Update(schedule);
         await _dbContext.SaveChangesAsync();
         return await GetScheduleById(schedule.ScheduleId);
+    }
+
+    public async Task<Schedule> GetScheduleByDoctorAndDate(int doctorId, DateTime date)
+    {
+        return await _dbContext.Schedules.Where(s => s.DoctorId == doctorId && s.Date == date).FirstOrDefaultAsync();
     }
 }

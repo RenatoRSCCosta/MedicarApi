@@ -22,5 +22,8 @@ public class ScheduleConfiguration : IEntityTypeConfiguration<Schedule>
         builder.HasMany(s => s.Consultations)
             .WithOne(c => c.Schedule)
             .HasForeignKey(c => c.ScheduleId);
+
+        builder.Property(s => s.Date)
+            .HasColumnType("date");
     }
 }
