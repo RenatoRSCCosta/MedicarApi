@@ -14,5 +14,5 @@ public interface IScheduleRepository
     Task<Schedule> CreateSchedule(Schedule schedule);
     Task<Schedule> UpdateSchedule(Schedule schedule);
     Task DeleteSchedule(Schedule schedule);
-    Task<Schedule> GetScheduleByDoctorAndDate(int doctorId, DateTime date);
+    Task<bool> CheckScheduleForDay(int doctorId, DateTime date);
 }

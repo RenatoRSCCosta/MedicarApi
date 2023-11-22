@@ -44,8 +44,8 @@ public class ScheduleRepository : IScheduleRepository
         return await GetScheduleById(schedule.ScheduleId);
     }
 
-    public async Task<Schedule> GetScheduleByDoctorAndDate(int doctorId, DateTime date)
+    public async Task<bool> CheckScheduleForDay(int doctorId, DateTime date)
     {
-        return await _dbContext.Schedules.Where(s => s.DoctorId == doctorId && s.Date == date).FirstOrDefaultAsync();
+        return await _dbContext.Schedules.Where(s => s.DoctorId == doctorId && s.Date == date).AnyAsync();
     }
 }

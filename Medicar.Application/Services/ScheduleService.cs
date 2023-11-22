@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using Medicar.Application.Dtos.PostDtos;
 using Medicar.Application.Interfaces;
+using Medicar.Application.Validators;
 using Medicar.Domain.Interfaces;
 using Medicar.Domain.Return;
 using Medicar_API.Domain.Entities;
@@ -28,21 +30,17 @@ public class ScheduleService : BaseService, IScheduleService
     {
         var result = new CustomReturn<PostScheduleDto>();
 
+        var validator = new ScheduleValidator(_scheduleRepository);
+
         string error = "Erro ao criar agenda. Verificar notificações para mais informações!";
         string success = "Agenda criada com sucesso!";
         string noDataFound = "Dados não encontrados na base!";
 
         try
         {
-            var today = DateTime.Now;
+            await validator.ValidateAndThrowAsync(scheduleDto);
 
             var schedule = _mapper.Map<Schedule>(scheduleDto);
-
-            var scheduleByDoctor = await _scheduleRepository.GetScheduleByDoctorAndDate(scheduleDto.DoctorId, scheduleDto.Date.Date);
-
-            if (schedule.Date < DateTime.Now.Date) throw new ApplicationException("Não é possivel criar agenda para um dia passado");
-
-            if (scheduleByDoctor is not null) throw new ApplicationException("Não é possivel criar mais de uma agenda para o medico no mesmo dia");
 
             var response = await _scheduleRepository.CreateSchedule(schedule);
 

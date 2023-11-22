@@ -1,9 +1,13 @@
-﻿using Medicar.Application.Interfaces;
+﻿using FluentValidation;
+using Medicar.Application.Dtos.PostDtos;
+using Medicar.Application.Interfaces;
 using Medicar.Application.Mappings;
 using Medicar.Application.Services;
+using Medicar.Application.Validators;
 using Medicar.Domain.Interfaces;
 using Medicar.Infrastructure.Contexs;
 using Medicar.Infrastructure.Repositories;
+using Medicar_API.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -41,6 +45,12 @@ public static class DependencyInjection
         services.AddScoped<IScheduleRepository, ScheduleRepository>();
         services.AddScoped<ISlotRepository, SlotRepository>();
         services.AddScoped<ISpecialtyRepository, SpecialtyRepository>();
+
+        #endregion
+
+        #region Validators
+
+        services.AddScoped<IValidator<PostScheduleDto>, ScheduleValidator>();
 
         #endregion
 

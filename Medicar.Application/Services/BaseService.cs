@@ -16,7 +16,7 @@ public class BaseService
         {
             inputException = inputException.InnerException;
         }
-
+        var name = inputException.GetType().Name;
         switch (inputException.GetType().Name)
         {
             case "DbUpdateException":
@@ -30,6 +30,13 @@ public class BaseService
                 result.Notifications.Add(new ReturnError()
                 {
                     Type = "Generic",
+                    Message = inputException.Message
+                });
+                break;
+            case "ValidationException":
+                result.Notifications.Add(new ReturnError()
+                {
+                    Type = "Validation",
                     Message = inputException.Message
                 });
                 break;
