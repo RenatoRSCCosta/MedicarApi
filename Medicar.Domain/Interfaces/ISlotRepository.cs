@@ -9,7 +9,7 @@ namespace Medicar.Domain.Interfaces;
 
 public interface ISlotRepository
 {
-    Task<List<Slot>> GetAllSlots();
+    Task<List<Slot>> GetSlotsBySchedule(int scheduleId);
     Task<Slot> GetSlotById(int id);
     Task<Slot> CreateSlot(Slot slot);
     Task<Slot> UpdateSlot(Slot slot);

@@ -27,9 +27,9 @@ public class SlotRepository : ISlotRepository
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task<List<Slot>> GetAllSlots()
+    public async Task<List<Slot>> GetSlotsBySchedule(int scheduleId)
     {
-        return await _dbContext.Slots.ToListAsync();
+        return await _dbContext.Slots.Where(s => s.ScheduleId == scheduleId).ToListAsync();
     }
 
     public async Task<Slot> GetSlotById(int id)

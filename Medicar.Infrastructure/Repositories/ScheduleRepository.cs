@@ -29,12 +29,23 @@ public class ScheduleRepository : IScheduleRepository
 
     public async Task<List<Schedule>> GetAllSchedules()
     {
-        return await _dbContext.Schedules.ToListAsync();
+        return await _dbContext.Schedules
+            .AsNoTracking()
+            .Include(s => s.Slots)
+            .Include(s => s.Doctor)
+            .ThenInclude(d => d.Specialty)
+            .Where(s => s.Date >= DateTime.Now.Date)
+            .ToListAsync();
     }
 
     public async Task<Schedule> GetScheduleById(int id)
     {
-        return await _dbContext.Schedules.FindAsync(id);
+        return await _dbContext.Schedules
+            .AsNoTracking()
+            .Include(s => s.Slots)
+            .Include(s => s.Doctor)
+            .ThenInclude(d => d.Specialty)
+            .FirstOrDefaultAsync(s => s.ScheduleId == id);
     }
 
     public async Task<Schedule> UpdateSchedule(Schedule schedule)

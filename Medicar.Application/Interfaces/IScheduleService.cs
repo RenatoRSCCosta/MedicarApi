@@ -1,4 +1,5 @@
-﻿using Medicar.Application.Dtos.PostDtos;
+﻿using Medicar.Application.Dtos.GetDtos;
+using Medicar.Application.Dtos.PostDtos;
 using Medicar.Domain.Return;
 using System;
 using System.Collections.Generic;
@@ -11,4 +12,5 @@ namespace Medicar.Application.Interfaces;
 public interface IScheduleService
 {
     Task<CustomReturn<PostScheduleDto>> CreateSchedule(PostScheduleDto schedule);
+    Task<CustomReturn<GetScheduleDto>> GetAllSchedules();
 }

@@ -21,7 +21,22 @@ public class ScheduleController : ControllerBase
     {
         var schedule = await _scheduleService.CreateSchedule(scheduleDto);
 
-        if(schedule is not null)
+        if (schedule is not null)
+        {
+            return Ok(schedule);
+        }
+        else
+        {
+            return BadRequest();
+        }
+    }
+
+    [HttpGet]
+    public async Task<ActionResult> GetAll()
+    {
+        var schedule = await _scheduleService.GetAllSchedules();
+
+        if (schedule is not null)
         {
             return Ok(schedule);
         }

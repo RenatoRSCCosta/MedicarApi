@@ -40,14 +40,6 @@ public class DoctorService : BaseService, IDoctorService
         {
             var doctors = await _doctorRepository.GetAllDoctors();
 
-            if (doctors.Any())
-            {
-                foreach (var doctor in doctors)
-                {
-                    doctor.Specialty = await _specialtyRepository.GetSpecialtyById(doctor.SpecialtyId);
-                }
-            }
-
             result.SetData(_mapper.Map<List<GetDoctorDto>>(doctors));
         }
         catch(Exception ex)
@@ -70,11 +62,6 @@ public class DoctorService : BaseService, IDoctorService
         {
             var doctor = await _doctorRepository.GetDoctorById(id);
 
-            if (doctor is not null)
-            {
-                doctor.Specialty = await _specialtyRepository.GetSpecialtyById(doctor.SpecialtyId);
-            }
-
             result.SetData(_mapper.Map<GetDoctorDto>(doctor));
         }
         catch (Exception ex)
@@ -82,7 +69,7 @@ public class DoctorService : BaseService, IDoctorService
             result = ManageException(result, ex);
         }
 
-        return SetFeedbackMessage(result, error, success, noDataFound);
+        return SetFeedbackMessage(result, error, noDataFound, success);
     }
 
     public async Task<CustomReturn<PostDoctorDto>> CreateDoctor(PostDoctorDto doctorDto)

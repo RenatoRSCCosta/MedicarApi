@@ -29,12 +29,16 @@ public class DoctorRepository : IDoctorRepository
 
     public async Task<List<Doctor>> GetAllDoctors()
     {
-        return await _dbContext.Doctors.ToListAsync();
+        return await _dbContext.Doctors
+            .Include(d => d.Specialty)
+            .ToListAsync();
     }
 
     public async Task<Doctor> GetDoctorById(int id)
     {
-        return await _dbContext.Doctors.FindAsync(id);
+        return await _dbContext.Doctors
+            .Include(d => d.Specialty)
+            .FirstOrDefaultAsync(d => d.DoctorId == id);
     }
 
     public async Task<Doctor> UpdateDoctor(Doctor doctor)

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
+using Medicar.Application.Dtos.GetDtos;
 using Medicar.Application.Dtos.PostDtos;
 using Medicar.Application.Interfaces;
 using Medicar.Application.Validators;
@@ -18,11 +19,13 @@ namespace Medicar.Application.Services;
 public class ScheduleService : BaseService, IScheduleService
 {
     private IScheduleRepository _scheduleRepository;
+    private ISlotRepository _slotRepository;
     private IMapper _mapper;
 
-    public ScheduleService(IScheduleRepository scheduleRepository, IMapper mapper)
+    public ScheduleService(IScheduleRepository scheduleRepository, ISlotRepository slotRepository, IMapper mapper)
     {
         _scheduleRepository = scheduleRepository;
+        _slotRepository = slotRepository;
         _mapper = mapper;
     }
 
@@ -45,6 +48,28 @@ public class ScheduleService : BaseService, IScheduleService
             var response = await _scheduleRepository.CreateSchedule(schedule);
 
             result.SetData(_mapper.Map<PostScheduleDto>(response));
+        }
+        catch (Exception ex)
+        {
+            result = ManageException(result, ex);
+        }
+
+        return SetFeedbackMessage(result, error, noDataFound, success);
+    }
+
+    public async Task<CustomReturn<GetScheduleDto>> GetAllSchedules()
+    {
+        var result = new CustomReturn<GetScheduleDto>();
+
+        string error = "Erro ao buscar agendas. Verificar notificações para mais informações.";
+        string success = "Agendas encontradas com sucesso!";
+        string noDataFound = "Dados não encontrados na base!";
+
+        try
+        {
+            var schedules = await _scheduleRepository.GetAllSchedules();
+
+            result.SetData(_mapper.Map<List<GetScheduleDto>>(schedules));
         }
         catch (Exception ex)
         {
