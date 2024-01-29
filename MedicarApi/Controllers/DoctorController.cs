@@ -1,6 +1,5 @@
 ﻿using Medicar.Application.Dtos;
-using Medicar.Application.Dtos.GetDtos;
-using Medicar.Application.Dtos.PostDtos;
+using Medicar.Application.Dtos.DoctorDtos;
 using Medicar.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -52,7 +51,7 @@ public class DoctorController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult> Update(int id, PutDoctorDto doctorDto)
+    public async Task<ActionResult> Update(int id, DoctorDto doctorDto)
     {
         var doctor = await _doctorService.UpdateDoctor(doctorDto);
 

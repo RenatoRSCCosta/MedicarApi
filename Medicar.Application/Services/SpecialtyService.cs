@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Medicar.Application.Dtos;
-using Medicar.Application.Dtos.GetDtos;
-using Medicar.Application.Dtos.PostDtos;
+using Medicar.Application.Dtos.SpecialtyDtos;
 using Medicar.Application.Interfaces;
 using Medicar.Domain.Interfaces;
 using Medicar.Domain.Return;
@@ -26,9 +25,9 @@ public class SpecialtyService : BaseService, ISpecialtyService
 
     }
 
-    public async Task<CustomReturn<GetSpecialtyDto>> GetAllSpecialtys()
+    public async Task<CustomReturn<SpecialtyDto>> GetAllSpecialtys()
     {
-        var result = new CustomReturn<GetSpecialtyDto>();
+        var result = new CustomReturn<SpecialtyDto>();
 
         string error = "Erro ao buscar especialidades. Verificar notificações para mais informações.";
         string success = "Especialidades encontradas com sucesso!";
@@ -38,7 +37,7 @@ public class SpecialtyService : BaseService, ISpecialtyService
         {
             var specialtys = await _specialtyRepository.GetAllSpecialtys();
 
-            result.SetData(_mapper.Map<List<GetSpecialtyDto>>(specialtys));
+            result.SetData(_mapper.Map<List<SpecialtyDto>>(specialtys));
         }
         catch (Exception ex)
         {
@@ -48,9 +47,9 @@ public class SpecialtyService : BaseService, ISpecialtyService
         return SetFeedbackMessage(result, error, noDataFound, success);
     }
 
-    public async Task<CustomReturn<GetSpecialtyDto>> GetSpecialtyById(int id)
+    public async Task<CustomReturn<SpecialtyDto>> GetSpecialtyById(int id)
     {
-        var result = new CustomReturn<GetSpecialtyDto>();
+        var result = new CustomReturn<SpecialtyDto>();
 
         string error = "Erro ao buscar especialidade. Verificar notificações para mais informações.";
         string success = "Especialidade encontrada com sucesso!";
@@ -60,7 +59,7 @@ public class SpecialtyService : BaseService, ISpecialtyService
         {
             var specialty = await _specialtyRepository.GetSpecialtyById(id);
 
-            result.SetData(_mapper.Map<GetSpecialtyDto>(specialty));
+            result.SetData(_mapper.Map<SpecialtyDto>(specialty));
         }
         catch (Exception ex)
         {
@@ -94,9 +93,9 @@ public class SpecialtyService : BaseService, ISpecialtyService
         return SetFeedbackMessage(result, error, noDataFound, success);
     }
 
-    public async Task<CustomReturn<PutSpecialtyDto>> UpdateSpecialty(PutSpecialtyDto specialtyDto)
+    public async Task<CustomReturn<SpecialtyDto>> UpdateSpecialty(SpecialtyDto specialtyDto)
     {
-        var result = new CustomReturn<PutSpecialtyDto>();
+        var result = new CustomReturn<SpecialtyDto>();
 
         string error = "Erro ao atualizar especialidade. Verificar notificações para mais informações.";
         string success = "Especialidade atualizada encontradas com sucesso!";
@@ -108,7 +107,7 @@ public class SpecialtyService : BaseService, ISpecialtyService
 
             var response = await _specialtyRepository.UpdateSpecialty(specialty);
 
-            result.SetData(_mapper.Map<PutSpecialtyDto>(result));
+            result.SetData(_mapper.Map<SpecialtyDto>(result));
         }
         catch (Exception ex)
         {
@@ -118,9 +117,9 @@ public class SpecialtyService : BaseService, ISpecialtyService
         return SetFeedbackMessage(result, error, noDataFound, success);
     }
 
-    public async Task<CustomReturn<GetSpecialtyDto>> DeleteSpecialtyById(int id)
+    public async Task<CustomReturn<SpecialtyDto>> DeleteSpecialtyById(int id)
     {
-        var result = new CustomReturn<GetSpecialtyDto>();
+        var result = new CustomReturn<SpecialtyDto>();
 
         string error = "Erro ao remover especialidade. Verificar notificações para mais informações.";
         string success = "Especialidade removido com sucesso!";
@@ -134,7 +133,7 @@ public class SpecialtyService : BaseService, ISpecialtyService
             {
                 await _specialtyRepository.DeleteSpecialty(specialty);
 
-                result.SetData(_mapper.Map<GetSpecialtyDto>(specialty));
+                result.SetData(_mapper.Map<SpecialtyDto>(specialty));
             }
         }
         catch (Exception ex)

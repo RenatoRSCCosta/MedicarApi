@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
-using Medicar.Application.Dtos.GetDtos;
-using Medicar.Application.Dtos.PostDtos;
+using Medicar.Application.Dtos.DoctorDtos;
+using Medicar.Application.Dtos.ScheduleDtos;
+using Medicar.Application.Dtos.SpecialtyDtos;
 using Medicar_API.Domain.Entities;
 
 namespace Medicar.Application.Mappings;
@@ -11,20 +12,16 @@ public class AutoMapping : Profile
     {
         #region Doctor Map
         CreateMap<Doctor, PostDoctorDto>().ReverseMap();
-        CreateMap<Doctor, PutDoctorDto>().ReverseMap();
-        CreateMap<Doctor, GetDoctorDto>().ReverseMap();
+        CreateMap<Doctor, DoctorDto>().ReverseMap();
         #endregion
 
         #region Specialty Map
         CreateMap<Specialty, PostSpecialtyDto>().ReverseMap();
-        CreateMap<Specialty, PutSpecialtyDto>().ReverseMap();
-        CreateMap<Specialty, GetSpecialtyDto>().ReverseMap();
+        CreateMap<Specialty, SpecialtyDto>().ReverseMap();
         #endregion
 
         #region Schedule Map
         CreateMap<Schedule, PostScheduleDto>().ReverseMap();
-        //CreateMap<Specialty, PutSpecialtyDto>().ReverseMap();
-        CreateMap<Schedule, GetScheduleDto>().ReverseMap();
         #endregion
     }
 }

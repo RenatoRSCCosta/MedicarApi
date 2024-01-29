@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using Medicar.Application.Dtos.GetDtos;
-using Medicar.Application.Dtos.PostDtos;
+using Medicar.Application.Dtos.ScheduleDtos;
 using Medicar.Application.Interfaces;
 using Medicar.Application.Validators;
 using Medicar.Domain.Interfaces;

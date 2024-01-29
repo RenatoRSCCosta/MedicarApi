@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Medicar.Application.Dtos.PostDtos
+namespace Medicar.Application.Dtos.SpecialtyDtos
 {
     public class PostSpecialtyDto
     {
         [Required]
-        public string Name { get; set; }
+        public string? Name { get; set; }
     }
 }

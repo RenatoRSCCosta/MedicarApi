@@ -1,6 +1,5 @@
 ﻿using Medicar.Application.Dtos;
-using Medicar.Application.Dtos.GetDtos;
-using Medicar.Application.Dtos.PostDtos;
+using Medicar.Application.Dtos.SpecialtyDtos;
 using Medicar.Application.Interfaces;
 using Medicar.Application.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -49,7 +48,7 @@ public class SpecialtyController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult> Update(int id, PutSpecialtyDto specialtyDto)
+    public async Task<ActionResult> Update(int id, SpecialtyDto specialtyDto)
     {
         var specialty = await _specialtyService.UpdateSpecialty(specialtyDto);
         if (specialty is not null)

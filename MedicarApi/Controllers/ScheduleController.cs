@@ -1,4 +1,4 @@
-﻿using Medicar.Application.Dtos.PostDtos;
+﻿using Medicar.Application.Dtos.ScheduleDtos;
 using Medicar.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 

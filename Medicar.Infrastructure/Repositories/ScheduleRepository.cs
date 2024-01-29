@@ -2,7 +2,6 @@
 using Medicar.Infrastructure.Contexs;
 using Medicar_API.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace Medicar.Infrastructure.Repositories;
 
@@ -14,20 +13,7 @@ public class ScheduleRepository : IScheduleRepository
         _dbContext = context;
     }
 
-    public async Task<Schedule> CreateSchedule (Schedule schedule)
-    {
-        _dbContext.Schedules.Add(schedule);
-        await _dbContext.SaveChangesAsync();
-        return schedule;
-    }
-
-    public async Task DeleteSchedule(Schedule schedule)
-    {
-        _dbContext.Schedules.Remove(schedule);
-        await _dbContext.SaveChangesAsync();
-    }
-
-    public async Task<List<Schedule>> GetAllSchedules()
+    public async Task<List<Schedule>> GetAll()
     {
         return await _dbContext.Schedules
             .AsNoTracking()
@@ -38,7 +24,7 @@ public class ScheduleRepository : IScheduleRepository
             .ToListAsync();
     }
 
-    public async Task<Schedule> GetScheduleById(int id)
+    public async Task<Schedule?> GetById(int id)
     {
         return await _dbContext.Schedules
             .AsNoTracking()
@@ -48,15 +34,35 @@ public class ScheduleRepository : IScheduleRepository
             .FirstOrDefaultAsync(s => s.ScheduleId == id);
     }
 
-    public async Task<Schedule> UpdateSchedule(Schedule schedule)
+    public async Task<Schedule?> Add(Schedule schedule)
+    {
+        _dbContext.Schedules.Add(schedule);
+
+        await _dbContext.SaveChangesAsync();
+
+        return await GetById(schedule.ScheduleId);
+    }
+
+    public async Task<Schedule?> Update(Schedule schedule)
     {
         _dbContext.Schedules.Update(schedule);
+
         await _dbContext.SaveChangesAsync();
-        return await GetScheduleById(schedule.ScheduleId);
+
+        return await GetById(schedule.ScheduleId);
+    }
+
+    public async Task Delete(Schedule schedule)
+    {
+        _dbContext.Schedules.Remove(schedule);
+
+        await _dbContext.SaveChangesAsync();
     }
 
     public async Task<bool> CheckScheduleForDay(int doctorId, DateTime date)
     {
-        return await _dbContext.Schedules.Where(s => s.DoctorId == doctorId && s.Date == date).AnyAsync();
+        return await _dbContext.Schedules
+            .Where(s => s.DoctorId == doctorId && s.Date == date)
+            .AnyAsync();
     }
 }

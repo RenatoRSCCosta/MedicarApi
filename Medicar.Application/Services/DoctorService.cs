@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Medicar.Application.Dtos;
-using Medicar.Application.Dtos.GetDtos;
-using Medicar.Application.Dtos.PostDtos;
+using Medicar.Application.Dtos.DoctorDtos;
 using Medicar.Application.Interfaces;
 using Medicar.Domain.Interfaces;
 using Medicar.Domain.Return;
@@ -28,9 +27,9 @@ public class DoctorService : BaseService, IDoctorService
 
     }
 
-    public async Task<CustomReturn<GetDoctorDto>> GetAllDoctors()
+    public async Task<CustomReturn<DoctorDto>> GetAllDoctors()
     {
-        var result = new CustomReturn<GetDoctorDto>();
+        var result = new CustomReturn<DoctorDto>();
 
         string error = "Erro ao buscar medicos. Verificar notificações para mais informações.";
         string success = "Medicos encontrados com sucesso!";
@@ -40,7 +39,15 @@ public class DoctorService : BaseService, IDoctorService
         {
             var doctors = await _doctorRepository.GetAllDoctors();
 
-            result.SetData(_mapper.Map<List<GetDoctorDto>>(doctors));
+            if (doctors.Any())
+            {
+                foreach (var doctor in doctors)
+                {
+                    doctor.Specialty = await _specialtyRepository.GetSpecialtyById(doctor.SpecialtyId);
+                }
+            }
+
+            result.SetData(_mapper.Map<List<DoctorDto>>(doctors));
         }
         catch(Exception ex)
         {
@@ -50,9 +57,9 @@ public class DoctorService : BaseService, IDoctorService
         return SetFeedbackMessage(result, error, noDataFound, success);
     }
 
-    public async Task<CustomReturn<GetDoctorDto>> GetDoctorById(int id)
+    public async Task<CustomReturn<DoctorDto>> GetDoctorById(int id)
     {
-        var result = new CustomReturn<GetDoctorDto>();
+        var result = new CustomReturn<DoctorDto>();
 
         string error = "Erro ao buscar medico. Verificar notificações para mais informações.";
         string success = "Medico encontrado com sucesso!";
@@ -62,7 +69,12 @@ public class DoctorService : BaseService, IDoctorService
         {
             var doctor = await _doctorRepository.GetDoctorById(id);
 
-            result.SetData(_mapper.Map<GetDoctorDto>(doctor));
+            if (doctor is not null)
+            {
+                doctor.Specialty = await _specialtyRepository.GetSpecialtyById(doctor.SpecialtyId);
+            }
+
+            result.SetData(_mapper.Map<DoctorDto>(doctor));
         }
         catch (Exception ex)
         {
@@ -96,9 +108,9 @@ public class DoctorService : BaseService, IDoctorService
         return SetFeedbackMessage(result, error, noDataFound, success);
     }
 
-    public async Task<CustomReturn<PutDoctorDto>> UpdateDoctor(PutDoctorDto doctorDto)
+    public async Task<CustomReturn<DoctorDto>> UpdateDoctor(DoctorDto doctorDto)
     {
-        var result = new CustomReturn<PutDoctorDto>();
+        var result = new CustomReturn<DoctorDto>();
 
         string error = "Erro ao atualizar medico. Verificar notificações para mais informações.";
         string success = "Medico atualizado com sucesso!";
@@ -112,7 +124,7 @@ public class DoctorService : BaseService, IDoctorService
             {
                 var response = await _doctorRepository.UpdateDoctor(doctor);
 
-                result.SetData(_mapper.Map<PutDoctorDto>(response));
+                result.SetData(_mapper.Map<DoctorDto>(response));
             }   
         }
         catch (Exception ex)
@@ -123,9 +135,9 @@ public class DoctorService : BaseService, IDoctorService
         return SetFeedbackMessage(result, error, noDataFound, success);
     }
 
-    public async Task<CustomReturn<GetDoctorDto>> DeleteDoctor(int id)
+    public async Task<CustomReturn<DoctorDto>> DeleteDoctor(int id)
     {
-        var result = new CustomReturn<GetDoctorDto>();
+        var result = new CustomReturn<DoctorDto>();
 
         string error = "Erro ao remover medico. Verificar notificações para mais informações.";
         string success = "Medico removido com sucesso!";
@@ -139,7 +151,7 @@ public class DoctorService : BaseService, IDoctorService
             {
                 await _doctorRepository.DeleteDoctor(doctor);
 
-                result.SetData(_mapper.Map<GetDoctorDto>(doctor));
+                result.SetData(_mapper.Map<DoctorDto>(doctor));
             }
         }
         catch (Exception ex)

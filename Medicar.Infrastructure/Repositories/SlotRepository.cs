@@ -3,7 +3,6 @@ using Medicar.Infrastructure.Contexs;
 using Medicar_API.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace Medicar.Infrastructure.Repositories;
 
 public class SlotRepository : ISlotRepository
@@ -14,33 +13,38 @@ public class SlotRepository : ISlotRepository
         _dbContext = context;
     }
 
-    public async Task<Slot> CreateSlot(Slot slot)
-    {
-        _dbContext.Slots.Add(slot);
-        await _dbContext.SaveChangesAsync();
-        return slot;
-    }
-
-    public async Task DeleteSlot(Slot slot)
-    {
-        _dbContext.Slots.Remove(slot);
-        await _dbContext.SaveChangesAsync();
-    }
-
-    public async Task<List<Slot>> GetSlotsBySchedule(int scheduleId)
+    public async Task<List<Slot>> GetAll()
     {
         return await _dbContext.Slots.Where(s => s.ScheduleId == scheduleId).ToListAsync();
     }
 
-    public async Task<Slot> GetSlotById(int id)
+    public async Task<Slot?> GetById(int id)
     {
         return await _dbContext.Slots.FindAsync(id);
     }
 
-    public async Task<Slot> UpdateSlot(Slot slot)
+    public async Task<Slot?> Add(Slot slot)
+    {
+        _dbContext.Slots.Add(slot);
+
+        await _dbContext.SaveChangesAsync();
+
+        return await GetById(slot.SlotId);
+    }
+
+    public async Task Delete(Slot slot)
+    {
+        _dbContext.Slots.Remove(slot);
+
+        await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task<Slot?> Update(Slot slot)
     {
         _dbContext.Slots.Update(slot);
+
         await _dbContext.SaveChangesAsync();
-        return await GetSlotById(slot.SlotId);
+
+        return await GetById(slot.SlotId);
     }
 }
