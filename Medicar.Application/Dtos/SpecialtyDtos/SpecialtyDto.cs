@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Medicar.Application.Dtos.GetDtos;
+namespace Medicar.Application.Dtos.SpecialtyDtos;
 
-public class GetSpecialtyDto
+public class SpecialtyDto
 {
     public int SpecialtyId { get; set; }
-    public string Name { get; set; }
+    public string? Name { get; set; }
 }

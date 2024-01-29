@@ -4,9 +4,13 @@ namespace Medicar.Domain.Interfaces;
 
 public interface IDoctorRepository
 {
-    Task<List<Doctor>> GetAllDoctors();
-    Task<Doctor> GetDoctorById(int id);
-    Task<Doctor> CreateDoctor(Doctor doctor);
-    Task<Doctor> UpdateDoctor(Doctor doctor);
-    Task DeleteDoctor(Doctor doctor);
+    Task<List<Doctor>> GetAll();
+
+    Task<Doctor?> GetById(int id);
+
+    Task<Doctor?> Add(Doctor doctor);
+
+    Task<Doctor?> Update(Doctor doctor);
+
+    Task Delete(Doctor doctor);
 }

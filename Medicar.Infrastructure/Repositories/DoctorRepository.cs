@@ -3,7 +3,6 @@ using Medicar.Infrastructure.Contexs;
 using Medicar_API.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace Medicar.Infrastructure.Repositories;
 
 public class DoctorRepository : IDoctorRepository
@@ -14,33 +13,38 @@ public class DoctorRepository : IDoctorRepository
         _dbContext = context;
     }
 
-    public async Task<Doctor> CreateDoctor(Doctor doctor)
-    {
-        _dbContext.Doctors.Add(doctor);
-        await _dbContext.SaveChangesAsync();
-        return doctor;
-    }
-
-    public async Task DeleteDoctor(Doctor doctor)
-    {
-        _dbContext.Doctors.Remove(doctor);
-        await _dbContext.SaveChangesAsync();
-    }
-
-    public async Task<List<Doctor>> GetAllDoctors()
+    public async Task<List<Doctor>> GetAll()
     {
         return await _dbContext.Doctors.ToListAsync();
     }
 
-    public async Task<Doctor> GetDoctorById(int id)
+    public async Task<Doctor?> GetById(int id)
     {
         return await _dbContext.Doctors.FindAsync(id);
     }
 
-    public async Task<Doctor> UpdateDoctor(Doctor doctor)
+    public async Task<Doctor?> Add(Doctor doctor)
+    {
+        _dbContext.Doctors.Add(doctor);
+
+        await _dbContext.SaveChangesAsync();
+
+        return await GetById(doctor.DoctorId);
+    }
+
+    public async Task<Doctor?> Update(Doctor doctor)
     {
         _dbContext.Doctors.Update(doctor);
+
         await _dbContext.SaveChangesAsync();
-        return await GetDoctorById(doctor.DoctorId);
+
+        return await GetById(doctor.DoctorId);
+    }
+
+    public async Task Delete(Doctor doctor)
+    {
+        _dbContext.Doctors.Remove(doctor);
+
+        await _dbContext.SaveChangesAsync();
     }
 }

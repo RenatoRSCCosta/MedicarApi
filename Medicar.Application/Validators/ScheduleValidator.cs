@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using Medicar.Application.Dtos.PostDtos;
+using Medicar.Application.Dtos.ScheduleDtos;
 using Medicar.Domain.Interfaces;
 using Medicar_API.Domain.Entities;
 using System;
@@ -19,12 +19,14 @@ public class ScheduleValidator : AbstractValidator<PostScheduleDto>
     {
         _scheduleRepository = scheduleRepository;
 
-        RuleFor(schedule => schedule.Date).GreaterThan(DateTime.Now.Date).WithMessage("Não é possivel criar agenda para um dia passado");
+        RuleFor(schedule => schedule.Date).GreaterThan(DateTime.Now.Date)
+            .WithMessage("Não é possivel criar agenda para um dia passado");
 
         RuleFor(schedule => schedule).MustAsync(async (schedule, cancellation) =>
         {
             return !await _scheduleRepository.CheckScheduleForDay(schedule.DoctorId,schedule.Date);
-        }).WithMessage("Não é possivel criar mais de uma agenda para o medico no mesmo dia");
+        })
+            .WithMessage("Não é possivel criar mais de uma agenda para o medico no mesmo dia");
     }
 }
 

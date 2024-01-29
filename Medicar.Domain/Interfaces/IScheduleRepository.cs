@@ -1,18 +1,18 @@
 ﻿using Medicar_API.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Medicar.Domain.Interfaces;
 
 public interface IScheduleRepository
 {
-    Task<List<Schedule>> GetAllSchedules();
-    Task<Schedule> GetScheduleById(int id);
-    Task<Schedule> CreateSchedule(Schedule schedule);
-    Task<Schedule> UpdateSchedule(Schedule schedule);
-    Task DeleteSchedule(Schedule schedule);
+    Task<List<Schedule>> GetAll();
+
+    Task<Schedule?> GetById(int id);
+
+    Task<Schedule?> Add(Schedule schedule);
+
+    Task<Schedule?> Update(Schedule schedule);
+
+    Task Delete(Schedule schedule);
+
     Task<bool> CheckScheduleForDay(int doctorId, DateTime date);
 }

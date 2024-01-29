@@ -4,9 +4,13 @@ namespace Medicar.Domain.Interfaces;
 
 public interface ISpecialtyRepository
 {
-    Task<List<Specialty>> GetAllSpecialtys();
-    Task<Specialty> GetSpecialtyById(int id);
-    Task<Specialty> CreateSpecialty(Specialty specialty);
-    Task<Specialty> UpdateSpecialty(Specialty specialty);
-    Task DeleteSpecialty(Specialty specialty);
+    Task<List<Specialty>> GetAll();
+
+    Task<Specialty?> GetById(int id);
+
+    Task<Specialty?> Add(Specialty specialty);
+
+    Task<Specialty?> Update(Specialty specialty);
+
+    Task Delete(Specialty specialty);
 }

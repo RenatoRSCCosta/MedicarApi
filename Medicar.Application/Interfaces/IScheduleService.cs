@@ -1,4 +1,4 @@
-﻿using Medicar.Application.Dtos.PostDtos;
+﻿using Medicar.Application.Dtos.ScheduleDtos;
 using Medicar.Domain.Return;
 using System;
 using System.Collections.Generic;
