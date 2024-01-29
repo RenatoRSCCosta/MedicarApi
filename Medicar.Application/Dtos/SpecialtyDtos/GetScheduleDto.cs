@@ -13,5 +13,5 @@ public class GetScheduleDto
     public DateTime Date { get; set; }
     public bool Available { get; set; }
     public GetDoctorDto Doctor { get; set; }
-    public ICollection<Slot> Slots { get; set; }
+    public ICollection<GetSlotDto> Slots { get; set; }
 }

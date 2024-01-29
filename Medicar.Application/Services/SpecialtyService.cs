@@ -83,7 +83,7 @@ public class SpecialtyService : BaseService, ISpecialtyService
 
             var response = await _specialtyRepository.CreateSpecialty(specialty);
 
-            result.SetData(_mapper.Map<PostSpecialtyDto>(result));
+            result.SetData(_mapper.Map<PostSpecialtyDto>(response));
         }
         catch (Exception ex)
         {

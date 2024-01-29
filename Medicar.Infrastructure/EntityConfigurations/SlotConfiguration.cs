@@ -18,5 +18,10 @@ public class SlotConfiguration : IEntityTypeConfiguration<Slot>
         builder.HasMany(s => s.Consultations)
             .WithOne(c => c.Slot)
             .HasForeignKey(c => c.SlotId);
+
+        builder.Property(s => s.Hour)
+            .HasColumnName("Hour")
+            .HasColumnType("double precision")
+            .HasPrecision(1);
     }
 }

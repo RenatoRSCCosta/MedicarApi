@@ -35,6 +35,7 @@ public static class DependencyInjection
         services.AddScoped<IDoctorService, DoctorService>();
         services.AddScoped<IScheduleService, ScheduleService>();
         services.AddScoped<ISpecialtyService, SpecialtyService>();
+        services.AddScoped<ISlotService, SlotService>();
 
         #endregion
 

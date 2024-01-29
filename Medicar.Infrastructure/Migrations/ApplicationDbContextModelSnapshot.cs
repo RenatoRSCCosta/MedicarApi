@@ -121,8 +121,10 @@ namespace Medicar.Infrastructure.Migrations
                     b.Property<bool>("Available")
                         .HasColumnType("boolean");
 
-                    b.Property<TimeOnly>("Hour")
-                        .HasColumnType("time without time zone");
+                    b.Property<double>("Hour")
+                        .HasPrecision(1)
+                        .HasColumnType("double precision")
+                        .HasColumnName("Hour");
 
                     b.Property<int>("ScheduleId")
                         .HasColumnType("integer");
