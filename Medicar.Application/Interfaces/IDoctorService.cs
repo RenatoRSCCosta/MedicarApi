@@ -10,10 +10,10 @@ namespace Medicar.Application.Interfaces;
 
 public interface IDoctorService
 {
-    Task<CustomReturn<DoctorDto>> GetAllDoctors();
-    Task<CustomReturn<DoctorDto>> GetDoctorById(int id);
-    Task<CustomReturn<PostDoctorDto>> CreateDoctor(PostDoctorDto doctor);
-    Task<CustomReturn<DoctorDto>> UpdateDoctor(DoctorDto doctor);
-    Task<CustomReturn<DoctorDto>> DeleteDoctor(int id);
+    Task<CustomReturn<DoctorDto>> GetAll();
+    Task<CustomReturn<DoctorDto>> GetById(int id);
+    Task<CustomReturn<PostDoctorDto>> Add(PostDoctorDto doctor);
+    Task<CustomReturn<DoctorDto>> Update(DoctorDto doctor);
+    Task<CustomReturn<DoctorDto>> Delete(int id);
 
 }

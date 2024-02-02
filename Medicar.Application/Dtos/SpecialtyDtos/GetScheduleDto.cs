@@ -1,4 +1,5 @@
-﻿using Medicar_API.Domain.Entities;
+﻿using Medicar.Application.Dtos.SlotDtos;
+using Medicar_API.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,5 @@ public class GetScheduleDto
     public DateTime Date { get; set; }
     public bool Available { get; set; }
     public GetDoctorDto Doctor { get; set; }
-    public ICollection<GetSlotDto> Slots { get; set; }
+    public ICollection<SlotDto> Slots { get; set; }
 }

@@ -1,53 +1,37 @@
 ﻿using AutoMapper;
-using Medicar.Application.Dtos;
 using Medicar.Application.Dtos.DoctorDtos;
 using Medicar.Application.Interfaces;
 using Medicar.Domain.Interfaces;
 using Medicar.Domain.Return;
 using Medicar_API.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Medicar.Application.Services;
 
 public class DoctorService : BaseService, IDoctorService
 {
     private IDoctorRepository _doctorRepository;
-    private ISpecialtyRepository _specialtyRepository;
     private IMapper _mapper;
 
-    public DoctorService(IDoctorRepository doctorRepository, ISpecialtyRepository specialtyRepository, IMapper mapper)
+    public DoctorService(IDoctorRepository doctorRepository, IMapper mapper)
     {
         _doctorRepository = doctorRepository;
-        _specialtyRepository = specialtyRepository;
         _mapper = mapper;
 
     }
 
-    public async Task<CustomReturn<DoctorDto>> GetAllDoctors()
+    public async Task<CustomReturn<DoctorDto>> GetAll()
     {
-        var result = new CustomReturn<DoctorDto>();
-
         string error = "Erro ao buscar medicos. Verificar notificações para mais informações.";
         string success = "Medicos encontrados com sucesso!";
         string noDataFound = "Dados não encontrados na base!";
 
+        var result = new CustomReturn<DoctorDto>();
+
         try
         {
-            var doctors = await _doctorRepository.GetAllDoctors();
+            var doctors = await _doctorRepository.GetAll();
 
-            if (doctors.Any())
-            {
-                foreach (var doctor in doctors)
-                {
-                    doctor.Specialty = await _specialtyRepository.GetSpecialtyById(doctor.SpecialtyId);
-                }
-            }
-
-            result.SetData(_mapper.Map<List<DoctorDto>>(doctors));
+            result.SetData(_mapper.Map<DoctorDto>(doctors));
         }
         catch(Exception ex)
         {
@@ -57,22 +41,17 @@ public class DoctorService : BaseService, IDoctorService
         return SetFeedbackMessage(result, error, noDataFound, success);
     }
 
-    public async Task<CustomReturn<DoctorDto>> GetDoctorById(int id)
+    public async Task<CustomReturn<DoctorDto>> GetById(int id)
     {
-        var result = new CustomReturn<DoctorDto>();
-
         string error = "Erro ao buscar medico. Verificar notificações para mais informações.";
         string success = "Medico encontrado com sucesso!";
         string noDataFound = "Dados não encontrados na base!";
 
+        var result = new CustomReturn<DoctorDto>();
+
         try
         {
-            var doctor = await _doctorRepository.GetDoctorById(id);
-
-            if (doctor is not null)
-            {
-                doctor.Specialty = await _specialtyRepository.GetSpecialtyById(doctor.SpecialtyId);
-            }
+            var doctor = await _doctorRepository.GetById(id);
 
             result.SetData(_mapper.Map<DoctorDto>(doctor));
         }
@@ -84,21 +63,21 @@ public class DoctorService : BaseService, IDoctorService
         return SetFeedbackMessage(result, error, noDataFound, success);
     }
 
-    public async Task<CustomReturn<PostDoctorDto>> CreateDoctor(PostDoctorDto doctorDto)
+    public async Task<CustomReturn<DoctorDto>> Add(PostDoctorDto doctorDto)
     {
-        var result = new CustomReturn<PostDoctorDto>();
-
         string error = "Erro ao cadastrar medico. Verificar notificações para mais informações.";
         string success = "Medico cadastrado com sucesso!";
         string noDataFound = "Dados não encontrados na base!";
+
+        var result = new CustomReturn<DoctorDto>();
 
         try
         {
             var doctor = _mapper.Map<Doctor>(doctorDto);
 
-            var response = await _doctorRepository.CreateDoctor(doctor);
+            var response = await _doctorRepository.Add(doctor);
 
-            result.SetData(_mapper.Map<PostDoctorDto>(response));
+            result.SetData(_mapper.Map<DoctorDto>(response));
         }
         catch (Exception ex)
         {
@@ -108,13 +87,13 @@ public class DoctorService : BaseService, IDoctorService
         return SetFeedbackMessage(result, error, noDataFound, success);
     }
 
-    public async Task<CustomReturn<DoctorDto>> UpdateDoctor(DoctorDto doctorDto)
+    public async Task<CustomReturn<DoctorDto>> Update(DoctorDto doctorDto)
     {
-        var result = new CustomReturn<DoctorDto>();
-
         string error = "Erro ao atualizar medico. Verificar notificações para mais informações.";
         string success = "Medico atualizado com sucesso!";
         string noDataFound = "Dados não encontrados na base!";
+
+        var result = new CustomReturn<DoctorDto>();
 
         try
         {
@@ -122,7 +101,7 @@ public class DoctorService : BaseService, IDoctorService
 
             if (doctor is not null) 
             {
-                var response = await _doctorRepository.UpdateDoctor(doctor);
+                var response = await _doctorRepository.Update(doctor);
 
                 result.SetData(_mapper.Map<DoctorDto>(response));
             }   
@@ -135,21 +114,21 @@ public class DoctorService : BaseService, IDoctorService
         return SetFeedbackMessage(result, error, noDataFound, success);
     }
 
-    public async Task<CustomReturn<DoctorDto>> DeleteDoctor(int id)
+    public async Task<CustomReturn<DoctorDto>> Delete(int id)
     {
-        var result = new CustomReturn<DoctorDto>();
-
         string error = "Erro ao remover medico. Verificar notificações para mais informações.";
         string success = "Medico removido com sucesso!";
         string noDataFound = "Dados não encontrados na base!";
 
+        var result = new CustomReturn<DoctorDto>();
+
         try
         {
-            var doctor = await _doctorRepository.GetDoctorById(id);
+            var doctor = await _doctorRepository.GetById(id);
 
             if (doctor is not null)
             {
-                await _doctorRepository.DeleteDoctor(doctor);
+                await _doctorRepository.Delete(doctor);
 
                 result.SetData(_mapper.Map<DoctorDto>(doctor));
             }

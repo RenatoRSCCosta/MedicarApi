@@ -4,7 +4,7 @@ namespace Medicar.Domain.Interfaces;
 
 public interface ISlotRepository
 {
-    Task<List<Slot>> GetAll();
+    Task<List<Slot>> GetSlotsByScheduleId(int scheduleId);
 
     Task<Slot?> GetById(int id);
 

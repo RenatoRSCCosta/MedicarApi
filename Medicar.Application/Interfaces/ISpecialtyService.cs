@@ -1,20 +1,13 @@
-﻿using Medicar.Application.Dtos;
-using Medicar.Application.Dtos.SpecialtyDtos;
+﻿using Medicar.Application.Dtos.SpecialtyDtos;
 using Medicar.Domain.Return;
-using Medicar_API.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Medicar.Application.Interfaces;
 
 public interface ISpecialtyService
 {
-    Task<CustomReturn<SpecialtyDto>> GetAllSpecialtys();
-    Task<CustomReturn<SpecialtyDto>> GetSpecialtyById(int id);
-    Task<CustomReturn<PostSpecialtyDto>> CreateSpecialty(PostSpecialtyDto specialty);
-    Task<CustomReturn<SpecialtyDto>> UpdateSpecialty(SpecialtyDto specialty);
-    Task<CustomReturn<SpecialtyDto>> DeleteSpecialtyById(int id);
+    Task<CustomReturn<SpecialtyDto>> GetAll();
+    Task<CustomReturn<SpecialtyDto>> GetById(int id);
+    Task<CustomReturn<SpecialtyDto>> Add(PostSpecialtyDto specialty);
+    Task<CustomReturn<SpecialtyDto>> Update(SpecialtyDto specialty);
+    Task<CustomReturn<SpecialtyDto>> Delete(int id);
 }

@@ -13,9 +13,11 @@ public class SlotRepository : ISlotRepository
         _dbContext = context;
     }
 
-    public async Task<List<Slot>> GetAll()
+    public async Task<List<Slot>> GetSlotsByScheduleId(int scheduleId)
     {
-        return await _dbContext.Slots.Where(s => s.ScheduleId == scheduleId).ToListAsync();
+        return await _dbContext.Slots
+            .Where(s => s.Id == scheduleId)
+            .ToListAsync();
     }
 
     public async Task<Slot?> GetById(int id)
@@ -29,7 +31,7 @@ public class SlotRepository : ISlotRepository
 
         await _dbContext.SaveChangesAsync();
 
-        return await GetById(slot.SlotId);
+        return await GetById(slot.Id);
     }
 
     public async Task Delete(Slot slot)
@@ -45,6 +47,6 @@ public class SlotRepository : ISlotRepository
 
         await _dbContext.SaveChangesAsync();
 
-        return await GetById(slot.SlotId);
+        return await GetById(slot.Id);
     }
 }

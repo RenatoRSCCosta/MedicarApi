@@ -8,10 +8,10 @@ namespace Medicar_API.Domain.Entities;
 
 public class Slot
 {
-    public int SlotId { get; set; }
+    public int Id { get; set; }
     public double Hour { get; set; }
     public bool Available { get; set; }
     public int ScheduleId { get; set; }
-    public Schedule Schedule { get; set; }
-    public ICollection<Consultation> Consultations { get; set; }
+    public Schedule? Schedule { get; set; }
+    public ICollection<Consultation>? Consultations { get; set; }
 }

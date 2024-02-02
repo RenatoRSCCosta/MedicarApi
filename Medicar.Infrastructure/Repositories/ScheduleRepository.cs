@@ -31,7 +31,7 @@ public class ScheduleRepository : IScheduleRepository
             .Include(s => s.Slots)
             .Include(s => s.Doctor)
             .ThenInclude(d => d.Specialty)
-            .FirstOrDefaultAsync(s => s.ScheduleId == id);
+            .FirstOrDefaultAsync(s => s.Id == id);
     }
 
     public async Task<Schedule?> Add(Schedule schedule)
@@ -40,7 +40,7 @@ public class ScheduleRepository : IScheduleRepository
 
         await _dbContext.SaveChangesAsync();
 
-        return await GetById(schedule.ScheduleId);
+        return await GetById(schedule.Id);
     }
 
     public async Task<Schedule?> Update(Schedule schedule)
@@ -49,7 +49,7 @@ public class ScheduleRepository : IScheduleRepository
 
         await _dbContext.SaveChangesAsync();
 
-        return await GetById(schedule.ScheduleId);
+        return await GetById(schedule.Id);
     }
 
     public async Task Delete(Schedule schedule)

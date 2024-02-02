@@ -28,7 +28,7 @@ public class SpecialtyRepository : ISpecialtyRepository
 
         await _dbContext.SaveChangesAsync();
 
-        return await GetById(specialty.SpecialtyId);
+        return await GetById(specialty.Id);
     }
 
     public async Task<Specialty?> Update(Specialty specialty)
@@ -37,7 +37,7 @@ public class SpecialtyRepository : ISpecialtyRepository
 
         await _dbContext.SaveChangesAsync();
 
-        return await GetById(specialty.SpecialtyId);
+        return await GetById(specialty.Id);
     }
 
     public async Task Delete(Specialty specialty)

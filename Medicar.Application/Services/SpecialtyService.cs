@@ -25,19 +25,19 @@ public class SpecialtyService : BaseService, ISpecialtyService
 
     }
 
-    public async Task<CustomReturn<SpecialtyDto>> GetAllSpecialtys()
+    public async Task<CustomReturn<SpecialtyDto>> GetAll()
     {
-        var result = new CustomReturn<SpecialtyDto>();
-
         string error = "Erro ao buscar especialidades. Verificar notificações para mais informações.";
         string success = "Especialidades encontradas com sucesso!";
         string noDataFound = "Dados não encontrados na base!";
 
+        var result = new CustomReturn<SpecialtyDto>();
+
         try
         {
-            var specialtys = await _specialtyRepository.GetAllSpecialtys();
+            var specialtys = await _specialtyRepository.GetAll();
 
-            result.SetData(_mapper.Map<List<SpecialtyDto>>(specialtys));
+            result.SetData(_mapper.Map<SpecialtyDto>(specialtys));
         }
         catch (Exception ex)
         {
@@ -47,17 +47,17 @@ public class SpecialtyService : BaseService, ISpecialtyService
         return SetFeedbackMessage(result, error, noDataFound, success);
     }
 
-    public async Task<CustomReturn<SpecialtyDto>> GetSpecialtyById(int id)
+    public async Task<CustomReturn<SpecialtyDto>> GetById(int id)
     {
-        var result = new CustomReturn<SpecialtyDto>();
-
         string error = "Erro ao buscar especialidade. Verificar notificações para mais informações.";
         string success = "Especialidade encontrada com sucesso!";
         string noDataFound = "Dados não encontrados na base!";
 
+        var result = new CustomReturn<SpecialtyDto>();
+
         try
         {
-            var specialty = await _specialtyRepository.GetSpecialtyById(id);
+            var specialty = await _specialtyRepository.GetById(id);
 
             result.SetData(_mapper.Map<SpecialtyDto>(specialty));
         }
@@ -69,21 +69,21 @@ public class SpecialtyService : BaseService, ISpecialtyService
         return SetFeedbackMessage(result, error, noDataFound, success);
     }
 
-    public async Task<CustomReturn<PostSpecialtyDto>> CreateSpecialty(PostSpecialtyDto specialtyDto)
+    public async Task<CustomReturn<SpecialtyDto>> Add(PostSpecialtyDto specialtyDto)
     {
-        var result = new CustomReturn<PostSpecialtyDto>();
-
         string error = "Erro ao criar especialidade. Verificar notificações para mais informações.";
         string success = "Especialidades criada com sucesso!";
         string noDataFound = "Dados não encontrados na base!";
+
+        var result = new CustomReturn<SpecialtyDto>();
 
         try
         {
             var specialty = _mapper.Map<Specialty>(specialtyDto);
 
-            var response = await _specialtyRepository.CreateSpecialty(specialty);
+            var response = await _specialtyRepository.Add(specialty);
 
-            result.SetData(_mapper.Map<PostSpecialtyDto>(response));
+            result.SetData(_mapper.Map<SpecialtyDto>(response));
         }
         catch (Exception ex)
         {
@@ -93,19 +93,19 @@ public class SpecialtyService : BaseService, ISpecialtyService
         return SetFeedbackMessage(result, error, noDataFound, success);
     }
 
-    public async Task<CustomReturn<SpecialtyDto>> UpdateSpecialty(SpecialtyDto specialtyDto)
+    public async Task<CustomReturn<SpecialtyDto>> Update(SpecialtyDto specialtyDto)
     {
-        var result = new CustomReturn<SpecialtyDto>();
-
         string error = "Erro ao atualizar especialidade. Verificar notificações para mais informações.";
         string success = "Especialidade atualizada encontradas com sucesso!";
         string noDataFound = "Dados não encontrados na base!";
+
+        var result = new CustomReturn<SpecialtyDto>();
 
         try
         {
             var specialty = _mapper.Map<Specialty>(specialtyDto);
 
-            var response = await _specialtyRepository.UpdateSpecialty(specialty);
+            var response = await _specialtyRepository.Update(specialty);
 
             result.SetData(_mapper.Map<SpecialtyDto>(result));
         }
@@ -117,21 +117,21 @@ public class SpecialtyService : BaseService, ISpecialtyService
         return SetFeedbackMessage(result, error, noDataFound, success);
     }
 
-    public async Task<CustomReturn<SpecialtyDto>> DeleteSpecialtyById(int id)
+    public async Task<CustomReturn<SpecialtyDto>> Delete(int id)
     {
-        var result = new CustomReturn<SpecialtyDto>();
-
         string error = "Erro ao remover especialidade. Verificar notificações para mais informações.";
         string success = "Especialidade removido com sucesso!";
         string noDataFound = "Dados não encontrados na base!";
 
+        var result = new CustomReturn<SpecialtyDto>();
+
         try
         {
-            var specialty = await _specialtyRepository.GetSpecialtyById(id);
+            var specialty = await _specialtyRepository.GetById(id);
 
             if (specialty is not null)
             {
-                await _specialtyRepository.DeleteSpecialty(specialty);
+                await _specialtyRepository.Delete(specialty);
 
                 result.SetData(_mapper.Map<SpecialtyDto>(specialty));
             }

@@ -24,7 +24,7 @@ public class DoctorRepository : IDoctorRepository
     {
         return await _dbContext.Doctors
             .Include(d => d.Specialty)
-            .FirstOrDefaultAsync(d => d.DoctorId == id);
+            .FirstOrDefaultAsync(d => d.Id == id);
     }
 
     public async Task<Doctor?> Add(Doctor doctor)
@@ -33,7 +33,7 @@ public class DoctorRepository : IDoctorRepository
 
         await _dbContext.SaveChangesAsync();
 
-        return await GetById(doctor.DoctorId);
+        return await GetById(doctor.Id);
     }
 
     public async Task<Doctor?> Update(Doctor doctor)
@@ -42,7 +42,7 @@ public class DoctorRepository : IDoctorRepository
 
         await _dbContext.SaveChangesAsync();
 
-        return await GetById(doctor.DoctorId);
+        return await GetById(doctor.Id);
     }
 
     public async Task Delete(Doctor doctor)

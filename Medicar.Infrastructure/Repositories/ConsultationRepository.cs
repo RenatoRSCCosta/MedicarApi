@@ -29,7 +29,7 @@ public class ConsultationRepository : IConsultationRepository
 
         await _dbContext.SaveChangesAsync();
 
-        return await GetById(consultation.ConsultationId);
+        return await GetById(consultation.Id);
     }
 
     public async Task<Consultation?> Update(Consultation consultation)
@@ -38,7 +38,7 @@ public class ConsultationRepository : IConsultationRepository
 
         await _dbContext.SaveChangesAsync();
 
-        return await GetById(consultation.ConsultationId);
+        return await GetById(consultation.Id);
     }
 
     public async Task Delete(Consultation consultation)
